@@ -11,43 +11,47 @@ import AudioPage from '../home/audio-page';
 const Navigation = () => {
   const Stack = createNativeStackNavigator();
 
+  const sreens = [
+    {
+      name: 'LockScreen',
+      component: LockPage,
+    },
+    {
+      name: 'Home',
+      component: Home,
+    },
+    {
+      name: 'Image',
+      component: ImagePage,
+    },
+    {
+      name: 'Video',
+      component: VideoPage,
+    },
+    {
+      name: 'Document',
+      component: DocumentPage,
+    },
+    {
+      name: 'Notes',
+      component: NotesPage,
+    },
+    {
+      name: 'Audio',
+      component: AudioPage,
+    },
+  ];
+
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name="LockScreen"
-        component={LockPage}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Image"
-        component={ImagePage}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Video"
-        component={VideoPage}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Document"
-        component={DocumentPage}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Notes"
-        component={NotesPage}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Audio"
-        component={AudioPage}
-        options={{headerShown: false}}
-      />
+      {sreens.map(item => (
+        <Stack.Screen
+          key={item.name}
+          name={item.name}
+          component={item.component}
+          options={{headerShown: false, animation: 'ios_from_right'}}
+        />
+      ))}
     </Stack.Navigator>
   );
 };

@@ -18,7 +18,8 @@ const ImagePage = ({image}: any) => {
   const [photos, setPhotos] = useState<any>([]);
   const [load, setLoad] = useState<any>({});
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  // const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [myIndex, setMyIndex] = useState(0);
 
   useEffect(() => {
     if (Platform.OS === 'android') {
@@ -49,7 +50,7 @@ const ImagePage = ({image}: any) => {
   const handleButtonPress = async () => {
     try {
       const result = await CameraRoll.getPhotos({
-        first: 5, // You select how many image
+        first: 9, // You select how many image
         assetType: 'Photos',
         mimeTypes: ['image/png', 'image/jpg', 'image/jpeg'], // Fix typo here
       });
@@ -71,10 +72,10 @@ const ImagePage = ({image}: any) => {
     setLoad((prev: any) => ({...prev, [index]: false}));
   };
 
-  const openImageViewer = (uri: number) => {
-    setSelectedImage(uri); // Set the selected image URL
-    setIsVisible(true); // Open the modal
-  };
+  // const openImageViewer = (uri: number) => {
+  //   setSelectedImage(uri); // Set the selected image URL
+  //   setIsVisible(true); // Open the modal
+  // };
 
   const renderItem = ({item, index}: any) => (
     <View style={styles.imageContainer}>
@@ -85,7 +86,13 @@ const ImagePage = ({image}: any) => {
           color="#0000ff"
         />
       )}
-      <TouchableOpacity onPress={() => openImageViewer(index)}>
+      <TouchableOpacity
+        onPress={() => {
+          setIsVisible(true);
+          setMyIndex(index);
+        }}
+        key={index}
+        activeOpacity={0.8}>
         <Image
           style={styles.image}
           source={{uri: item.node.image.uri}}
@@ -105,29 +112,34 @@ const ImagePage = ({image}: any) => {
 
   return (
     <>
-      <Navbar title="Photo" icon={<BackIcon />} />
-      <View style={styles.container}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={photos}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          numColumns={3} // Grid with 3 columns
-          columnWrapperStyle={styles.columnWrapper} // Styling for columns
-          contentContainerStyle={styles.contentContainer} // Spacing for the entire list
+      {!isVisible && <Navbar title="Photo" icon={<BackIcon />} />}
+
+      {/* {selectedImage !== null && ( */}
+      {isVisible ? (
+        <ImageViewerComp
+          visible={isVisible}
+          url={imagesForViewer}
+          // imageIndex={selectedImage}
+          onRequestClose={() => {
+            setIsVisible(false);
+            // setSelectedImage(null);
+          }}
+          indexOf={myIndex}
         />
-        {selectedImage !== null && (
-          <ImageViewerComp
-            visible={isVisible}
-            url={imagesForViewer}
-            imageIndex={selectedImage}
-            onRequestClose={() => {
-              setIsVisible(false);
-              setSelectedImage(null);
-            }}
+      ) : (
+        <View style={[styles.container, {padding: isVisible ? 0 : 10}]}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={photos}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={3} // Grid with 3 columns
+            columnWrapperStyle={styles.columnWrapper} // Styling for columns
+            contentContainerStyle={styles.contentContainer} // Spacing for the entire list
           />
-        )}
-      </View>
+        </View>
+      )}
+      {/* )} */}
     </>
   );
 };
@@ -135,7 +147,7 @@ const ImagePage = ({image}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    // padding: 10,
     backgroundColor: '#f0f0f0',
   },
   contentContainer: {

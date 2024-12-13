@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,11 +9,12 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import { CameraRoll } from '@react-native-camera-roll/camera-roll';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import Video from 'react-native-video';
 import Navbar from '../../../component/go-back-navbar';
 import BackIcon from '../../../icon/back-icon';
 import AddButton from '../../../component/add-button';
+import {theme} from '../../../theme/theme';
 
 const VideoPage = () => {
   const [videos, setVideos] = useState<any>([]);
@@ -37,7 +38,7 @@ const VideoPage = () => {
           buttonNeutral: 'Ask Me Later',
           buttonNegative: 'Cancel',
           buttonPositive: 'OK',
-        }
+        },
       );
       if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
         console.log('Storage permission denied');
@@ -52,7 +53,7 @@ const VideoPage = () => {
     setIsLoading(true);
     try {
       const result = await CameraRoll.getPhotos({
-        first: 10,
+        first: 3,
         assetType: 'Videos',
       });
       setVideos(result.edges);
@@ -64,16 +65,16 @@ const VideoPage = () => {
   };
 
   // Render each video in a grid
-  const renderVideoItem = ({ item, index }: any) => (
+  const renderVideoItem = ({item, index}: any) => (
     <View style={styles.videoItem}>
       <TouchableOpacity>
         <Video
-          source={{ uri: item.node.image.uri }} // Video URI
+          source={{uri: item.node.image.uri}} // Video URI
           style={styles.video}
           automaticallyWaitsToMinimizeStalling={false}
+          paused={true}
           controls={true} // Show video controls
           resizeMode="contain" // Adjust the video size within the container
-          
         />
       </TouchableOpacity>
     </View>
@@ -87,7 +88,7 @@ const VideoPage = () => {
       <AddButton />
       <View style={styles.container}>
         {isLoading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color={theme.colors.darkBlue} />
         ) : (
           <FlatList
             data={videos}
@@ -106,7 +107,7 @@ const VideoPage = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.whiteColor,
     padding: 10,
   },
   contentContainer: {
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
   columnWrapper: {
     justifyContent: 'space-between',
     marginBottom: 10,
-    gap:10
+    gap: 10,
   },
   videoItem: {
     flex: 1,
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
   video: {
     width: '100%',
     height: 120, // Adjust video height as per your needs
-    backgroundColor: 'black',
+    backgroundColor: theme.colors.blackColor,
   },
 });
 
