@@ -1,7 +1,7 @@
 import React from 'react';
 import {Path, Svg} from 'react-native-svg';
 import {theme} from '../theme/theme';
-const RightIcon = ({
+const PlayIcon = ({
   height,
   width,
   color,
@@ -12,13 +12,13 @@ const RightIcon = ({
 }) => {
   return (
     <Svg
-      height={height ?? 30}
+      height={height ?? 24}
       viewBox="0 -960 960 960"
-      width={width ?? 30}
+      width={width ?? 24}
       fill={color ?? theme.colors.blackColor}>
-      <Path d="m381-240 424-424-57-56-368 367-169-170-57 57 227 226Zm0 113L42-466l169-170 170 170 366-367 172 168-538 538Z" />
+      <Path d="M320-273v-414q0-17 12-28.5t28-11.5q5 0 10.5 1.5T381-721l326 207q9 6 13.5 15t4.5 19q0 10-4.5 19T707-446L381-239q-5 3-10.5 4.5T360-233q-16 0-28-11.5T320-273Zm80-207Zm0 134 210-134-210-134v268Z" />
     </Svg>
   );
 };
 
-export default RightIcon;
+export default PlayIcon;

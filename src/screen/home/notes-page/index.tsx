@@ -2,7 +2,8 @@ import {View, Text, ScrollView} from 'react-native';
 import React from 'react';
 import Navbar from '../../../component/go-back-navbar';
 import BackIcon from '../../../icon/back-icon';
-import AddButton from '../../../component/add-button';
+// import AddButton from '../../../component/add-button';
+import {theme} from '../../../theme/theme';
 
 const NotesPage = () => {
   const data = [
@@ -61,8 +62,8 @@ const NotesPage = () => {
                   paddingVertical: 25,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: 'white',
-                  shadowColor: '#000',
+                  backgroundColor: theme.colors.whiteColor,
+                  shadowColor: theme.colors.blackColor,
                   borderRadius: 5,
                   shadowOffset: {
                     width: 0,
@@ -72,7 +73,15 @@ const NotesPage = () => {
                   shadowRadius: 1,
                   elevation: 5,
                 }}>
-                <Text style={{width: '100%', fontSize: 15}}>{item?.desc}</Text>
+                <Text
+                  style={{
+                    width: '100%',
+                    fontSize: 15,
+                    fontFamily: theme.fonts.NunitoSemiBold,
+                    color: theme.colors.blackColor,
+                  }}>
+                  {item?.desc}
+                </Text>
               </View>
             ))}
           </View>

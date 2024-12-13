@@ -1,16 +1,17 @@
 import {TouchableOpacity} from 'react-native';
 import React from 'react';
 import PlusIcon from '../../icon/plus-icon';
-import { ParamListBase, useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {theme} from '../../theme/theme';
 
 const AddButton = () => {
-    const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   return (
     <TouchableOpacity
-    //   onPress={() => navigation.navigate('AddBusiness')}
+      //   onPress={() => navigation.navigate('AddBusiness')}
       style={{
-        backgroundColor: 'darkblue',
+        backgroundColor: theme.colors.darkBlue,
         height: 63,
         width: 63,
         borderRadius: 100,
@@ -19,7 +20,7 @@ const AddButton = () => {
         position: 'absolute',
         bottom: 20,
         right: 20,
-        shadowColor: '#000',
+        shadowColor: theme.colors.blackColor,
         shadowOffset: {
           width: 0,
           height: 2,

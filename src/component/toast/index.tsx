@@ -14,7 +14,7 @@ export const ToastMessage = ({
     text1: message,
     visibilityTime: 3000,
     autoHide: true,
-    // topOffset: 0,
+    topOffset: 0,
     swipeable: false,
     text1Style: {
       fontSize: 13,
